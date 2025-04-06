@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import Searchbar from '@/components/SearchBar';
 import useFetch from '@/services/useFetch';
 import { fetchMovies } from '@/services/api';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { icons } from '@/constants/icons';
 
 const SearchItem = ({ title }: Movie) => {
@@ -21,7 +21,9 @@ const SearchItem = ({ title }: Movie) => {
           <View className="bg-tabBarColor p-2 rounded-full">
             <Image source={icons.clock} tintColor={'#707478'} />
           </View>
-          <Text className="text-[#ebecf0] w-full ms-5">{title}</Text>
+          <Text className="text-[#ebecf0] flex-1 ms-5" numberOfLines={1}>
+            {title}
+          </Text>
         </View>
       </TouchableOpacity>
     </Link>
@@ -30,6 +32,7 @@ const SearchItem = ({ title }: Movie) => {
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   const {
     data: movies,
@@ -63,6 +66,8 @@ const Search = () => {
         placeholder="Search or Type url"
         value={searchQuery}
         onChangeText={(text: string) => setSearchQuery(text)}
+        onMicClick={() => router.push('/pages/voiceSearch')}
+        onBackClick={() => {}}
       />
 
       <View className="flex-row justify-between items-center my-5 mx-5">

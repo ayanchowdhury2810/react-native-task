@@ -7,35 +7,43 @@ interface Props {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  onMicClick: () => void;
+  onBackClick: () => void;
 }
 
-const Searchbar = ({ placeholder, value, onChangeText }: Props) => {
+const Searchbar = ({ placeholder, value, onChangeText, onMicClick, onBackClick }: Props) => {
   return (
     <View className="flex-row items-center px-5 py-2 rounded-full bg-tabBarColor mx-5 justify-between">
       <View className="flex-row items-center justify-start">
+        <Pressable onPress={onBackClick}>
         <Image
-          source={icons.search}
-          className="size-5"
+          source={icons.back}
+          className="size-5 p-3"
           resizeMode="contain"
           tintColor="#707478"
         />
+        </Pressable>
         <TextInput
           placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
           placeholderTextColor="#707478"
-          className="ml-2 text-white flex-2"
+          className="ms-2 text-white flex-2"
           // style={{ fontSize: 20 }}
         />
       </View>
 
       <View className="flex-row item-center justify-end">
+        <Pressable
+        onPress={onMicClick}>
         <Image
           source={icons.mic}
           className="size-7 me-5"
           resizeMode="contain"
           tintColor="#fffffe"
         />
+        </Pressable>
+        
 
         <Image
           source={icons.camera}

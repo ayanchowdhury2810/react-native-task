@@ -19,15 +19,9 @@ const SearchbarHome = ({ placeholder, onPress }: Props) => {
             resizeMode="contain"
             tintColor="#707478"
           />
-          <TextInput
-            onPress={() => {}}
-            placeholder={placeholder}
-            value=""
-            onChangeText={() => {}}
-            placeholderTextColor="#707478"
-            className="ml-2 text-white flex-2"
-            style={{ fontSize: 20 }}
-          />
+          <Text className="ml-2 text-hintColor flex-2" style={{ fontSize: 20 }}>
+            {placeholder}
+          </Text>
         </View>
 
         <View className="flex-row item-center justify-end">

@@ -14,7 +14,12 @@ import search from '@/assets/icons/ic_search.png';
 import camera from '@/assets/icons/ic_camera.png';
 import mic from '@/assets/icons/ic_mic.png';
 import clock from '@/assets/icons/ic_clock.png';
-
+import back from '@/assets/icons/ic_back.png';
+import internet from '@/assets/icons/ic_internet.png';
+import arrow from '@/assets/icons/ic_arrow.png';
+import ici from '@/assets/icons/ic_i.png';
+import moon from '@/assets/icons/ic_moon.png';
+import breeze from '@/assets/icons/ic_breeze.png';
 
 export const icons = {
   home,
@@ -32,5 +37,11 @@ export const icons = {
   search,
   camera,
   mic,
-  clock
+  clock,
+  back,
+  internet,
+  arrow,
+  ici,
+  moon,
+  breeze
 };

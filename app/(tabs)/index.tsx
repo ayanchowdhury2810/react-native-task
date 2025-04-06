@@ -1,9 +1,11 @@
+import Dialog from '@/components/Dialog';
 import HomePageCard from '@/components/HomePageCard';
 import SearchbarHome from '@/components/SearchbarHome';
 import { icons } from '@/constants/icons';
 import { fetchMovies } from '@/services/api';
 import useFetch from '@/services/useFetch';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
   FlatList,
   Text,
@@ -11,6 +13,7 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 
 const Topics = ({ img, tint, bgColor }: any) => {
@@ -26,13 +29,13 @@ const Topics = ({ img, tint, bgColor }: any) => {
 
 const InfoCard = ({ heading, info, icon }: any) => {
   return (
-    <View className="border border-[#404145] rounded-lg pt-3 pb-3 me-4">
-      <Text className="items-start justify-start text-white text-md ps-3">
+    <View className="border border-[#404145] border-2 rounded-2xl pt-3 pb-3 me-4 w-40">
+      <Text className="items-start justify-start text-white text-md ps-3 pb-3">
         {heading}
       </Text>
-      <View className="flex flex-row items-center justify-between ps-3">
+      <View className="flex flex-row items-center justify-between px-3">
         <Text className="text-white">{info}</Text>
-        <Image source={icon} className="size-10" />
+        <Image source={icon} className="size-10" tintColor="white" />
       </View>
     </View>
   );
@@ -40,6 +43,7 @@ const InfoCard = ({ heading, info, icon }: any) => {
 
 export default function Index() {
   const router = useRouter();
+  const [visible, setVisible] = useState(false);
 
   const {
     data: movies,
@@ -66,7 +70,6 @@ export default function Index() {
           data={movies}
           renderItem={({ item }) => <HomePageCard {...item} />}
           keyExtractor={(item) => item.id.toString()}
-          // className="px-5"
           contentContainerStyle={{ paddingBottom: 100 }}
           ListHeaderComponent={
             <>
@@ -85,9 +88,11 @@ export default function Index() {
                   <Image source={icons.gemini} className="size-7" />
                 </View>
 
-                <View className="bg-[#79929e] justify-center items-center rounded-full w-10 h-10">
-                  <Text className="text-white">A</Text>
-                </View>
+                <Pressable onPress={() => setVisible(true)}>
+                  <View className="bg-[#79929e] justify-center items-center rounded-full w-10 h-10">
+                    <Text className="text-white">A</Text>
+                  </View>
+                </Pressable>
               </View>
 
               <View className="mt-5 w-full items-center justify-center">
@@ -108,7 +113,6 @@ export default function Index() {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 className="px-5 mt-5"
-                // contentContainerStyle={{ paddingHorizontal: 16 }}
               >
                 <Topics
                   img={icons.img_search}
@@ -133,18 +137,24 @@ export default function Index() {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                className="px-5 mt-5"
+                className="px-5"
                 // contentContainerStyle={{ paddingHorizontal: 16 }}
               >
-                <InfoCard heading="Gurugram" info="30" icon={icons.education} />
-                <InfoCard heading="Gurugram" info="30" icon={icons.education} />
-                <InfoCard heading="Gurugram" info="30" icon={icons.education} />
-                <InfoCard heading="Gurugram" info="30" icon={icons.education} />
+                <InfoCard heading="Gurugram" info="30" icon={icons.moon} />
+                <InfoCard
+                  heading="Air Quality - 170"
+                  info="moderate"
+                  icon={icons.breeze}
+                />
+                <InfoCard heading="Gurugram" info="30" icon={icons.moon} />
+                <InfoCard heading="Gurugram" info="30" icon={icons.breeze} />
               </ScrollView>
             </>
           }
         />
       )}
+
+      {/* <Dialog visible={visible} onClose={() => setVisible(false)} /> */}
     </View>
   );
 }
