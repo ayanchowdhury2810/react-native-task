@@ -1,11 +1,11 @@
-import Dialog from '@/components/Dialog';
 import HomePageCard from '@/components/HomePageCard';
 import SearchbarHome from '@/components/SearchbarHome';
 import { icons } from '@/constants/icons';
 import { fetchMovies } from '@/services/api';
 import useFetch from '@/services/useFetch';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { Audio } from 'expo-av';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   Text,
@@ -44,7 +44,18 @@ const InfoCard = ({ heading, info, icon }: any) => {
 export default function Index() {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
+  const [permission, setPermission] = useState(null);
 
+  useEffect(() => {
+    requestMicPermission();
+  }, []);
+
+  const requestMicPermission = async () => {
+    const response = await Audio.requestPermissionsAsync();
+    setPermission(response.status);
+  };
+
+  
   const {
     data: movies,
     loading: moviesLoading,
