@@ -20,6 +20,10 @@ import arrow from '@/assets/icons/ic_arrow.png';
 import ici from '@/assets/icons/ic_i.png';
 import moon from '@/assets/icons/ic_moon.png';
 import breeze from '@/assets/icons/ic_breeze.png';
+import flash from '@/assets/icons/ic_flash.png';
+import more from '@/assets/icons/ic_more.png';
+import gallery from '@/assets/icons/ic_gallery.png';
+import tick from '@/assets/icons/ic_tick.png';
 
 export const icons = {
   home,
@@ -43,5 +47,9 @@ export const icons = {
   arrow,
   ici,
   moon,
-  breeze
+  breeze,
+  flash,
+  more,
+  gallery,
+  tick
 };

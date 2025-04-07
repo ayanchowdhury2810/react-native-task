@@ -8,10 +8,16 @@ export default function RootLayout() {
       <StatusBar barStyle="light-content" backgroundColor="#1f2125" />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="pages/search" options={{ headerShown: false }}/>
-        <Stack.Screen name="pages/result" options={{ headerShown: false }}/>
-        <Stack.Screen name="pages/voiceSearch" options={{ headerShown: false }}/>
-
+        <Stack.Screen name="pages/search" options={{ headerShown: false }} />
+        <Stack.Screen name="pages/result" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="pages/voiceSearch"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="pages/camerascreen"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </>
   );

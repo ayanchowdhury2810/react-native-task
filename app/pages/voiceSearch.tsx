@@ -2,29 +2,17 @@ import { View, Text, Image, StatusBar, Pressable } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { icons } from '@/constants/icons';
 import { useRouter } from 'expo-router';
-import * as Speech from 'expo-speech';
-import * as Permissions from 'expo-permissions';
 import { Audio } from 'expo-av';
-
-const BAR_COUNT = 5;
+import { VoiceWaveDots } from '@/components/VoiceWaveDots';
 
 const VoiceSearch = () => {
   const router = useRouter();
 
+  const [isListening, setIsListening] = useState(false);
   const [text, setText] = useState('');
-  const [text2, setText2] = useState('TTT');
-
-  const speakText = () => {
-    Speech.speak(text2);
-  };
 
   const startListening = async () => {
-    // const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-    // if (status !== 'granted') {
-    //   alert('Permission to access microphone is required!');
-    //   return;
-    // }
-
+    setIsListening(true);
     const recording = new Audio.Recording();
     try {
       await recording.prepareToRecordAsync(
@@ -41,15 +29,16 @@ const VoiceSearch = () => {
         // Here you would typically send the audio to a speech-to-text service
         // For demonstration, we will simulate the text output
         setText('Simulated recognized text from speech');
+        setIsListening(false);
       }, 5000);
     } catch (error) {
       console.error('Error starting recording', error);
+      setIsListening(false);
     }
   };
 
   useEffect(() => {
     try {
-    //   speakText();
       startListening();
     } catch (e) {
       console.error('ERROR-->', e);
@@ -75,13 +64,17 @@ const VoiceSearch = () => {
         </View>
       </View>
 
-      <View className="w-full justify-between items-center flex-1 my-20">
+      <View className="items-center justify-between flex-1 w-full my-20">
         <Text className="text-[#ebecf0] text-3xl">Speak now</Text>
 
         <View>
-          <Text className="text-[#ebecf0] text-3xl">Speak now</Text>
-          <Text className="text-[#ebecf0] text-3xl">text: {text}</Text>
-          <Text className="text-[#ebecf0] text-3xl">text2: {text2}</Text>
+
+          { isListening ?
+            <View className="mt-8">
+            <VoiceWaveDots />
+          </View> :  <Text className="text-[#ebecf0] text-3xl">text: {text}</Text>
+          }
+          
         </View>
 
         <View className="flex-row bg-backgroundColor border-[#4a4c4e] border-2 px-5 py-4 rounded-full items-center justify-center">

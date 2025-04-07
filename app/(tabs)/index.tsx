@@ -15,11 +15,13 @@ import {
   ActivityIndicator,
   Pressable,
 } from 'react-native';
+import { useCameraPermissions } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 
 const Topics = ({ img, tint, bgColor }: any) => {
   return (
     <View
-      className="px-9 py-6 rounded-full me-4"
+      className="py-6 rounded-full px-9 me-4"
       style={{ backgroundColor: bgColor }}
     >
       <Image source={img} tintColor={tint} className="size-6" />
@@ -30,7 +32,7 @@ const Topics = ({ img, tint, bgColor }: any) => {
 const InfoCard = ({ heading, info, icon }: any) => {
   return (
     <View className="border border-[#404145] border-2 rounded-2xl pt-3 pb-3 me-4 w-40">
-      <Text className="items-start justify-start text-white text-md ps-3 pb-3">
+      <Text className="items-start justify-start pb-3 text-white text-md ps-3">
         {heading}
       </Text>
       <View className="flex flex-row items-center justify-between px-3">
@@ -45,9 +47,43 @@ export default function Index() {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
   const [permission, setPermission] = useState(null);
+  const [camerPermission, setCameraPermission] = useCameraPermissions();
+  const [micPermission, setMicPermission] = useState(null);
+  const [galleryPermission, setGalleryPermission] = useState(null);
+
+
+  const requestPermissions = async () => {
+    // Camera Permission
+    const [permission, requestPermission] = useCameraPermissions();
+    if (permission?.granted ) {
+      alert('Camera permission is required!');
+    } else{
+      setCameraPermission(permission?.granted)
+    }
+
+    // Microphone Permission
+    const micStatus = await Audio.requestPermissionsAsync();
+    if (!micStatus.granted) {
+      alert('Microphone permission is required!');
+    } else {
+      setMicPermission(micStatus.granted)
+    }
+
+    // Media Library (Gallery/Image Picker) Permission
+    const { status: mediaStatus } =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (mediaStatus !== 'granted') {
+      alert('Media library permission is required!');
+    } else {
+      setGalleryPermission(mediaStatus === 'granted')
+    }
+  };
 
   useEffect(() => {
     requestMicPermission();
+    setCameraPermission();
+    requestPermission();
+    // requestPermissions();
   }, []);
 
   const requestMicPermission = async () => {
@@ -55,7 +91,13 @@ export default function Index() {
     setPermission(response.status);
   };
 
-  
+  const requestPermission = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission to access media library is required!');
+    }
+  };
+
   const {
     data: movies,
     loading: moviesLoading,
@@ -84,15 +126,15 @@ export default function Index() {
           contentContainerStyle={{ paddingBottom: 100 }}
           ListHeaderComponent={
             <>
-              <View className="flex-row justify-between items-center px-5">
+              <View className="flex-row items-center justify-between px-5">
                 <Image
                   source={icons.filter}
                   className="size-7 "
                   tintColor="#8bb6fa"
                 />
 
-                <View className="flex-row justify-end items-center bg-tabBarColor px-2 py-2 rounded-lg">
-                  <View className="flex-row bg-backgroundColor px-2 py-3 me-3  rounded-lg justify-center items-center">
+                <View className="flex-row items-center justify-end px-2 py-2 rounded-lg bg-tabBarColor">
+                  <View className="flex-row items-center justify-center px-2 py-3 rounded-lg bg-backgroundColor me-3">
                     <Image source={icons.google} className="size-5" />
                     <Text className="text-white text-md ps-3">Search</Text>
                   </View>
@@ -106,7 +148,7 @@ export default function Index() {
                 </Pressable>
               </View>
 
-              <View className="mt-5 w-full items-center justify-center">
+              <View className="items-center justify-center w-full mt-5">
                 <Image
                   source={icons.google_txt}
                   className="size-40"

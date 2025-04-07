@@ -36,9 +36,10 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
-        }
-      ]
+        } 
+      ],
     ],
+    
     "experiments": {
       "typedRoutes": true
     }

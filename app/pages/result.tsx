@@ -1,11 +1,32 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
+import { View, Text, Image, BackHandler } from 'react-native';
+import React, { useEffect } from 'react';
 import ResultScreenSearchBar from '@/components/ResultScreenSearchBar';
 import ResultScreenBottombar from '@/components/ResultScreenBottombar';
 import MasonryList from '@react-native-seoul/masonry-list';
 import { icons } from '@/constants/icons';
+import { useRouter } from 'expo-router';
 
 const Result = () => {
+  const router = useRouter();
+
+  const useBackButtonHandler = () => {
+    useEffect(() => {
+      const onBackPress = () => {
+        router.dismissTo('/pages/search');
+        return true; // Prevent default behavior
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => subscription.remove(); // Cleanup
+    }, []);
+  };
+
+  useBackButtonHandler();
+
   return (
     <View className="flex-1 bg-backgroundColor">
       <ResultScreenSearchBar />
@@ -13,12 +34,10 @@ const Result = () => {
       <View className="h-0.5 bg-tabBarColor mt-5 mb-5" />
 
       <View className="flex-row items-center justify-start mx-3">
-        <Image
-          source={icons.ici}
-          tintColor="#b6b8b9"
-          className="size-6 "
-        />
-        <Text className="text-[#b6b8b9] ms-3">Result for people are limited</Text>
+        <Image source={icons.ici} tintColor="#b6b8b9" className="size-6 " />
+        <Text className="text-[#b6b8b9] ms-3">
+          Result for people are limited
+        </Text>
       </View>
 
       <View className="h-0.5 bg-tabBarColor mt-5" />
@@ -31,11 +50,11 @@ const Result = () => {
         showsVerticalScrollIndicator={false}
         renderItem={({ item, i }) => (
           <>
-            <View className="m-3 bg-gray-100 rounded-lg overflow-hidden">
+            <View className="m-3 overflow-hidden bg-gray-100 rounded-lg">
               <Image
                 source={{ uri: item.uri }}
                 resizeMode="cover"
-                className=" h-auto"
+                className="h-auto "
                 style={{ aspectRatio: 3 / 4 }}
               />
             </View>
@@ -51,7 +70,9 @@ const Result = () => {
         )}
       />
 
-      <ResultScreenBottombar />
+      <ResultScreenBottombar
+        onBackClick={() => router.dismissTo('/pages/search')}
+      />
     </View>
   );
 };

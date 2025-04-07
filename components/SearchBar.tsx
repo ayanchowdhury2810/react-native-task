@@ -9,16 +9,17 @@ interface Props {
   onChangeText: (text: string) => void;
   onMicClick: () => void;
   onBackClick: () => void;
+  onCameraClick: () => void;
 }
 
-const Searchbar = ({ placeholder, value, onChangeText, onMicClick, onBackClick }: Props) => {
+const Searchbar = ({ placeholder, value, onChangeText, onMicClick, onBackClick, onCameraClick }: Props) => {
   return (
-    <View className="flex-row items-center px-5 py-2 rounded-full bg-tabBarColor mx-5 justify-between">
+    <View className="flex-row items-center justify-between px-5 py-2 mx-5 rounded-full bg-tabBarColor">
       <View className="flex-row items-center justify-start">
         <Pressable onPress={onBackClick}>
         <Image
           source={icons.back}
-          className="size-5 p-3"
+          className="p-3 size-5"
           resizeMode="contain"
           tintColor="#707478"
         />
@@ -28,12 +29,12 @@ const Searchbar = ({ placeholder, value, onChangeText, onMicClick, onBackClick }
           value={value}
           onChangeText={onChangeText}
           placeholderTextColor="#707478"
-          className="ms-2 text-white flex-2"
+          className="text-white ms-2 flex-2"
           // style={{ fontSize: 20 }}
         />
       </View>
 
-      <View className="flex-row item-center justify-end">
+      <View className="flex-row justify-end item-center">
         <Pressable
         onPress={onMicClick}>
         <Image
@@ -45,12 +46,14 @@ const Searchbar = ({ placeholder, value, onChangeText, onMicClick, onBackClick }
         </Pressable>
         
 
+        <Pressable onPress={onCameraClick}>
         <Image
           source={icons.camera}
           className="size-7 me-2"
           resizeMode="contain"
           tintColor="#fffffe"
         />
+        </Pressable>
       </View>
     </View>
 

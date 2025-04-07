@@ -17,8 +17,8 @@ const SearchItem = ({ title }: Movie) => {
   return (
     <Link href={`/pages/result`} asChild>
       <TouchableOpacity>
-        <View className="w-full flex-row justify-start items-center mt-5 ">
-          <View className="bg-tabBarColor p-2 rounded-full">
+        <View className="flex-row items-center justify-start w-full mt-5 ">
+          <View className="p-2 rounded-full bg-tabBarColor">
             <Image source={icons.clock} tintColor={'#707478'} />
           </View>
           <Text className="text-[#ebecf0] flex-1 ms-5" numberOfLines={1}>
@@ -68,9 +68,10 @@ const Search = () => {
         onChangeText={(text: string) => setSearchQuery(text)}
         onMicClick={() => router.push('/pages/voiceSearch')}
         onBackClick={() => {}}
+        onCameraClick={() => router.push('/pages/camerascreen')}
       />
 
-      <View className="flex-row justify-between items-center my-5 mx-5">
+      <View className="flex-row items-center justify-between mx-5 my-5">
         <Text className="text-hintColor">Recent searches</Text>
         <Text className="text-hintColor">MANAGE HISTORY</Text>
       </View>
