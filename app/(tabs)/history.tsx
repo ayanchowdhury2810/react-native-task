@@ -3,8 +3,8 @@ import React from 'react'
 
 const History = () => {
   return (
-    <View>
-      <Text>History</Text>
+    <View className='flex-1 bg-[#1f2125] items-center justify-center'>
+      <Text className='text-4xl text-white'>History Screen</Text>
     </View>
   )
 }
