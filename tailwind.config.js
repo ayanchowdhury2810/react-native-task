@@ -13,7 +13,8 @@ module.exports = {
         backgroundColor: '#1f2125',
         tabSelectedColor: '#8bb6fa',
         tabSelectedBg: '#394357',
-        hintColor: '#707478'
+        hintColor: '#707478',
+        modalBg: '#2e3034'
       },
     },
   },

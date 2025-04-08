@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import { useCameraPermissions } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import ModalComponent from '@/components/ModalComponent';
 
 const Topics = ({ img, tint, bgColor }: any) => {
   return (
@@ -49,53 +50,16 @@ export default function Index() {
   const [permission, setPermission] = useState(null);
   const [camerPermission, setCameraPermission] = useCameraPermissions();
   const [micPermission, setMicPermission] = useState(null);
-  const [galleryPermission, setGalleryPermission] = useState(null);
-
-
-  const requestPermissions = async () => {
-    // Camera Permission
-    const [permission, requestPermission] = useCameraPermissions();
-    if (permission?.granted ) {
-      alert('Camera permission is required!');
-    } else{
-      setCameraPermission(permission?.granted)
-    }
-
-    // Microphone Permission
-    const micStatus = await Audio.requestPermissionsAsync();
-    if (!micStatus.granted) {
-      alert('Microphone permission is required!');
-    } else {
-      setMicPermission(micStatus.granted)
-    }
-
-    // Media Library (Gallery/Image Picker) Permission
-    const { status: mediaStatus } =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (mediaStatus !== 'granted') {
-      alert('Media library permission is required!');
-    } else {
-      setGalleryPermission(mediaStatus === 'granted')
-    }
-  };
+  // const [galleryPermission, setGalleryPermission] = useState(null);
 
   useEffect(() => {
     requestMicPermission();
     setCameraPermission();
-    requestPermission();
-    // requestPermissions();
   }, []);
 
   const requestMicPermission = async () => {
     const response = await Audio.requestPermissionsAsync();
     setPermission(response.status);
-  };
-
-  const requestPermission = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Permission to access media library is required!');
-    }
   };
 
   const {
@@ -207,7 +171,7 @@ export default function Index() {
         />
       )}
 
-      {/* <Dialog visible={visible} onClose={() => setVisible(false)} /> */}
+      <ModalComponent isOpen={visible} onPress={() => setVisible(false)} />
     </View>
   );
 }
