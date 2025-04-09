@@ -16,11 +16,14 @@
       }
     },
     "android": {
-      "permission": ["android.permission.RECORD_AUDIO"],
+      "permission": [
+        "android.permission.RECORD_AUDIO"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ayanchowdhury2810.ReactNativeTask"
     },
     "web": {
       "bundler": "metro",
@@ -36,12 +39,19 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
-        } 
-      ],
+        }
+      ]
     ],
-    
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "bf29cd86-81e4-4c8e-9479-ea420475fa32"
+      }
     }
   }
 }
